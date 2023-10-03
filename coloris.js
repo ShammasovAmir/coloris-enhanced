@@ -561,7 +561,7 @@
       h: hueSlider.value * 1,
       s: x / colorAreaDims.width * 100,
       v: 100 - (y / colorAreaDims.height * 100),
-      a: alphaSlider.value / 100
+      // a: alphaSlider.value / 100
     };
     const rgba = HSVAtoRGBA(hsva);
 
@@ -755,7 +755,7 @@
       r: Math.round(red * 255),
       g: Math.round(green * 255),
       b: Math.round(blue * 255),
-      a: hsva.a
+      // a: hsva.a
     };
   }
 
@@ -777,7 +777,7 @@
       h: hsva.h,
       s: saturation || 0,
       l: Math.round(lightness * 100),
-      a: hsva.a
+      // a: hsva.a
     };
   }
 
@@ -810,7 +810,7 @@
       h: hue < 0 ? hue + 360 : hue,
       s: Math.round(saturation * 100),
       v: Math.round(value * 100),
-      a: rgba.a
+      // a: rgba.a
     };
   }
 
@@ -820,7 +820,7 @@
    * @return {object} Red, green, blue and alpha values.
    */
   function strToRGBA(str) {
-    const regex = /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i;
+    const regex = /^(rgb)\D+([\d.]+)\D+([\d.]+)\D+([\d.]+)\D*?([\d.]+|$)$/i;
     let match, rgba;
 
     // Default to black for invalid color strings
@@ -835,11 +835,11 @@
         r: match[3] * 1,
         g: match[4] * 1,
         b: match[5] * 1,
-        a: match[6] * 1
+        // a: match[6] * 1
       };
 
       // Workaround to mitigate a Chromium bug where the alpha value is rounded incorrectly
-      rgba.a = +rgba.a.toFixed(2);
+      // rgba.a = +rgba.a.toFixed(2);
 
     } else {
       match = ctx.fillStyle.replace('#', '').match(/.{2}/g).map(h => parseInt(h, 16));
@@ -847,7 +847,7 @@
         r: match[0],
         g: match[1],
         b: match[2],
-        a: 1
+        // a: 1
       };
     }
 
@@ -877,16 +877,16 @@
       B = '0' + B;
     }
 
-    if (settings.alpha && (rgba.a < 1 || settings.forceAlpha)) {
-      const alpha = rgba.a * 255 | 0;
-      A = alpha.toString(16);
+    // if (settings.alpha && (rgba.a < 1 || settings.forceAlpha)) {
+    //   const alpha = rgba.a * 255 | 0;
+    //   A = alpha.toString(16);
+    //
+    //   if (alpha < 16) {
+    //     A = '0' + A;
+    //   }
+    // }
 
-      if (alpha < 16) {
-        A = '0' + A;
-      }
-    }
-
-    return '#' + R + G + B + A;
+    return '#' + R + G + B /*+ A*/;
   }
 
   /**
@@ -895,11 +895,11 @@
    * @return {string} CSS color string.
    */
   function RGBAToStr(rgba) {
-    if (!settings.alpha || (rgba.a === 1 && !settings.forceAlpha)) {
-      return `rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`;
-    } else {
-      return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
-    }
+    // if (!settings.alpha || (rgba.a === 1 && !settings.forceAlpha)) {
+    return `rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`;
+    // } else {
+    //   return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+    // }
   }
 
   /**
@@ -908,11 +908,11 @@
    * @return {string} CSS color string.
    */
   function HSLAToStr(hsla) {
-    if (!settings.alpha || (hsla.a === 1 && !settings.forceAlpha)) {
-      return `hsl(${hsla.h}, ${hsla.s}%, ${hsla.l}%)`;
-    } else {
-      return `hsla(${hsla.h}, ${hsla.s}%, ${hsla.l}%, ${hsla.a})`;
-    }
+    // if (!settings.alpha || (hsla.a === 1 && !settings.forceAlpha)) {
+    return `hsl(${hsla.h}, ${hsla.s}%, ${hsla.l}%)`;
+    // } else {
+    //   return `hsla(${hsla.h}, ${hsla.s}%, ${hsla.l}%, ${hsla.a})`;
+    // }
   }
 
   /**
