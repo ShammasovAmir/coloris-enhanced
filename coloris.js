@@ -7,7 +7,7 @@
 ((window, document, Math, undefined) => {
   const ctx = document.createElement('canvas').getContext('2d');
   const currentColor = { r: 0, g: 0, b: 0, h: 0, s: 0, v: 0, a: 1 };
-  let container, picker, colorArea, colorMarker, colorPreview, colorValue, clearButton, closeButton,
+  let container, picker, pickerContainer, colorArea, colorMarker, colorPreview, colorValue, clearButton, closeButton,
       hueSlider, hueMarker, alphaSlider, alphaMarker, currentEl, currentFormat, oldColor, keyboardNav,
       colorAreaDims = {};
 
@@ -921,6 +921,9 @@
   function init() {
     // Render the UI
     container = undefined;
+    pickerContainer = document.createElement('div');
+    pickerContainer.className = '__REPLACE_ME__';
+    document.body.appendChild(pickerContainer);
     picker = document.createElement('div');
     picker.setAttribute('id', 'clr-picker');
     picker.className = 'clr-picker';
@@ -959,7 +962,7 @@
     `<span id="clr-swatch-label" hidden>${settings.a11y.swatch}</span>`;
 
     // Append the color picker to the DOM
-    document.body.appendChild(picker);
+    pickerContainer.appendChild(picker);
 
     // Reference the UI elements
     colorArea = getEl('clr-color-area');
